@@ -9,8 +9,8 @@ public class Pixelmap
 
     public Pixelmap(int height, int width, int scalingFactor)
     {
-        this.height = height;
-        this.width = width;
+        this.height = height / scalingFactor;
+        this.width = width / scalingFactor;
         map = new Color[width, height];
         for (int w = 0; w < width; w++)
         {
@@ -60,8 +60,8 @@ public class Pixelmap
                 Color pixelColor = map[w, h];
                 if (!pixelColor.Equals(Color.Black))
                 {
-                    Pen pixelBrush = new Pen(pixelColor);
-                    g.DrawRectangle(pixelBrush, new Rectangle((w/scalingFactor), (h/scalingFactor), scalingFactor, scalingFactor));
+                    Brush pixelBrush = new SolidBrush(pixelColor);
+                    g.FillRectangle(pixelBrush, new Rectangle((w*scalingFactor), (h * scalingFactor), scalingFactor, scalingFactor));
                 }
             }
         }
