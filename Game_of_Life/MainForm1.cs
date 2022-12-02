@@ -7,45 +7,34 @@ namespace Game_of_Life;
 public partial class MainForm1 : Form
 {
     private int scalingFactor = 10;
+    Pixelmap pixelmap;
+
     public MainForm1()
     {
         InitializeComponent();
 
-        label1.Text = "Scaling Factor: " + scalingFactor.ToString() + $"\nDimensions: {pictureBox1.Size.Height.ToString()}x{pictureBox1.Size.Width.ToString()}";
-
-
-        /* this.Shown += (s, e) =>
-        {
-            while (true)
-            {
-                for (int i = 0; i < 20; i++)
-                {
-                    pixelmap.setPixel(rand.Next(50), rand.Next(20), rand.Next(3));
-                }
-
-                pictureBox1.Image = pixelmap.ToBitmap();
-                Thread.Sleep(120);
-            }
-        };*/
-    }
-
-    private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-    {
-        Pixelmap pixelmap;
-        
-        int height = pictureBox1.Size.Height;
-        int width = pictureBox1.Size.Width;
-
-        Graphics graphics = e.Graphics;
-
+        int height = 1000;
+        int width = 2000;
 
         pixelmap = new Pixelmap(height, width, scalingFactor);
         Random rand = new Random();
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 2000; i++)
         {
-            pixelmap.setPixel(rand.Next(width / scalingFactor), rand.Next(height / scalingFactor), rand.Next(3));
+            pixelmap.setPixel(rand.Next(width), rand.Next(height), rand.Next(3));
         }
+
+        label1.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)1 / (double)scalingFactor)} - Dimensions: {Math.Floor(pictureBox1.Size.Height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(pictureBox1.Size.Width * ((double)10 / (double)scalingFactor)).ToString()}";
+    }
+
+    private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+    {
+        int height = pictureBox1.Size.Height;
+        int width = pictureBox1.Size.Width;
+
+        label1.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)1 / (double)scalingFactor)} - Dimensions: {Math.Floor(height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(width * ((double)10 / (double)scalingFactor)).ToString()}";
+
+        Graphics graphics = e.Graphics;
 
         pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         pictureBox1.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -55,12 +44,12 @@ public partial class MainForm1 : Form
 
     private void pictureBox1_MouseWheel(object sender, MouseEventArgs e)
     {
-        scalingFactor += e.Delta/32;
-        if (scalingFactor < 1)
+        scalingFactor += e.Delta/64;
+        if (scalingFactor < 10)
         {
-            scalingFactor = 1;
+            scalingFactor = 10;
         }
-        label1.Text = "Scaling Factor: " + scalingFactor.ToString() + $"\nDimensions: {pictureBox1.Size.Height.ToString()}x{pictureBox1.Size.Width.ToString()}";
+        label1.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)1 / (double)scalingFactor)} - Dimensions: {Math.Floor(pictureBox1.Size.Height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(pictureBox1.Size.Width * ((double)10 / (double)scalingFactor)).ToString()}";
         pictureBox1.Refresh();
     }
 }
