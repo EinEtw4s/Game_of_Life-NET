@@ -37,6 +37,8 @@ partial class MainForm1
             this.buttonRepopulate = new System.Windows.Forms.Button();
             this.zoomInButton = new System.Windows.Forms.Button();
             this.zoomOutButton = new System.Windows.Forms.Button();
+            this.buttonTick = new System.Windows.Forms.Button();
+            this.buttonClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scalingSlider)).BeginInit();
             this.SuspendLayout();
@@ -108,12 +110,36 @@ partial class MainForm1
             this.zoomOutButton.UseVisualStyleBackColor = true;
             this.zoomOutButton.Click += new System.EventHandler(this.zoomOutButton_Click);
             // 
+            // buttonTick
+            // 
+            this.buttonTick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTick.Location = new System.Drawing.Point(701, 41);
+            this.buttonTick.Name = "buttonTick";
+            this.buttonTick.Size = new System.Drawing.Size(87, 23);
+            this.buttonTick.TabIndex = 6;
+            this.buttonTick.Text = "TICK";
+            this.buttonTick.UseVisualStyleBackColor = true;
+            this.buttonTick.Click += new System.EventHandler(this.buttonTick_Click);
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClear.Location = new System.Drawing.Point(608, 12);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(87, 23);
+            this.buttonClear.TabIndex = 7;
+            this.buttonClear.Text = "CLEAR";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonClear);
+            this.Controls.Add(this.buttonTick);
             this.Controls.Add(this.zoomOutButton);
             this.Controls.Add(this.zoomInButton);
             this.Controls.Add(this.buttonRepopulate);
@@ -137,4 +163,6 @@ partial class MainForm1
     private Button buttonRepopulate;
     private Button zoomInButton;
     private Button zoomOutButton;
+    private Button buttonTick;
+    private Button buttonClear;
 }

@@ -11,19 +11,14 @@ public class Pixelmap
     private int viewHeight;
     private int scalingAbsolute;
     private Color[] colors = {Color.Black, Color.White, Color.OrangeRed};
+    // gameWindow = [leftBound, rightBound, upperBound, lowerBound]
+    private int[] gameWindow = {0, 0, 0, 0};
 
     public Pixelmap(int height, int width, int scalingFactor)
     {
         this.height = height;
         this.width = width;
         map = new int[width, height];
-        for (int w = 0; w < width; w++)
-        {
-            for (int h = 0; h < height; h++)
-            {
-                map[w, h] = 0;
-            }
-        }
         
         this.scalingFactor = scalingFactor;
         this.midPoint = new int[] { width / 2, height / 2 };
@@ -43,19 +38,46 @@ public class Pixelmap
     public void clear()
     {
         map = new int[width, height];
-        for (int w = 0; w < width; w++)
-        {
-            for (int h = 0; h < height; h++)
-            {
-                map[w, h] = 0;
-            }
-        }
+        gameWindow = new int[] {0, 0, 0, 0};
     }
 
     public void setPixel(int x, int y, int val)
     {
         val = val >= 3 ? 0 : val;
         map[x, y] = val;
+
+        if (x == 0)
+        {
+            x = 1;
+        } else if (x == width)
+        {
+            x--;
+        }
+
+        if (y == 0)
+        {
+            y = 1;
+        } else if (y == height)
+        {
+            y--;
+        }
+
+        if (x < midPoint[0] - gameWindow[0])
+        {
+            gameWindow[0] = midPoint[0]-x;
+        }
+        if (x > midPoint[0] + gameWindow[1])
+        {
+            gameWindow[1] = midPoint[0] - x;
+        }
+        if (y < midPoint[1] - gameWindow[2])
+        {
+            gameWindow[2] = midPoint[1] - y;
+        }
+        if (y > midPoint[1] + gameWindow[3])
+        {
+            gameWindow[3] = midPoint[1] - y;
+        }
     }
 
     public void cyclePixel(int x, int y)
@@ -204,5 +226,72 @@ public class Pixelmap
             }
         }
         return g;
+    }
+
+    public void Tick()
+    {
+        int[,] mapBuffer = new int[width, height];
+
+        // for (int w = midPoint[0]-gameWindow[0]; w < midPoint[0] + gameWindow[1]; w++)
+        for (int w = 1; w < width - 1; w++)
+        {
+            // for (int h = midPoint[1] - gameWindow[2]; h < midPoint[1] + gameWindow[3]; h++)
+            for (int h = 1; h < height - 1; h++)
+            {
+                int neighbors = 0;
+
+                // iterate through all neighbors
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        if (map[(w - 1) + x, (h - 1) + y] != 0)
+                        {
+                            neighbors += 1;
+                        }
+                    }
+                }
+
+                if (map[w, h] == 0)
+                {
+                    if (neighbors == 3)
+                    {
+                        mapBuffer[w, h] = 1;
+                    }
+                }
+                else
+                {
+                    // since the current entity is also being counted...
+                    neighbors--;
+
+                    switch (neighbors)
+                    {
+                        // dies
+                        case < 2:
+                            mapBuffer[w, h] = 0;
+                            break;
+
+                        // lives
+                        case 2:
+                            mapBuffer[w, h] = 1;
+                            break;
+
+                        // lives
+                        case 3:
+                            mapBuffer[w, h] = 1;
+                            break;
+
+                        // dies
+                        case > 3:
+                            mapBuffer[w, h] = 0;
+                            break;
+                    }
+                }
+            }
+        }
+
+        map = mapBuffer;
+
+        return;
     }
 }

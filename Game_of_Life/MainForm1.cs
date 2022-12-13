@@ -180,4 +180,16 @@ public partial class MainForm1 : Form
         scalingSlider.Value = scalingAbsolute;
         pixelmap.setScalingAbsolute(scalingAbsolute);
     }
+
+    private void buttonTick_Click(object sender, EventArgs e)
+    {
+        pixelmap.Tick();
+        pictureBox.Refresh();
+    }
+
+    private void buttonClear_Click(object sender, EventArgs e)
+    {
+        pixelmap.clear();
+        pictureBox.Refresh();
+    }
 }
