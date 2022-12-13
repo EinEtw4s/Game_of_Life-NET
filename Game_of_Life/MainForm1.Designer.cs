@@ -35,6 +35,8 @@ partial class MainForm1
             this.debugLabel = new System.Windows.Forms.Label();
             this.scalingSlider = new System.Windows.Forms.TrackBar();
             this.buttonRepopulate = new System.Windows.Forms.Button();
+            this.zoomInButton = new System.Windows.Forms.Button();
+            this.zoomOutButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scalingSlider)).BeginInit();
             this.SuspendLayout();
@@ -67,11 +69,10 @@ partial class MainForm1
             this.scalingSlider.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.scalingSlider.Location = new System.Drawing.Point(12, 405);
             this.scalingSlider.Maximum = 500;
-            this.scalingSlider.Minimum = 10;
             this.scalingSlider.Name = "scalingSlider";
             this.scalingSlider.Size = new System.Drawing.Size(178, 45);
+            this.scalingSlider.SmallChange = 2;
             this.scalingSlider.TabIndex = 2;
-            this.scalingSlider.Value = 10;
             this.scalingSlider.ValueChanged += new System.EventHandler(this.scalingSlider_Changed);
             // 
             // buttonRepopulate
@@ -85,12 +86,36 @@ partial class MainForm1
             this.buttonRepopulate.UseVisualStyleBackColor = true;
             this.buttonRepopulate.Click += new System.EventHandler(this.buttonRepopulate_Click);
             // 
+            // zoomInButton
+            // 
+            this.zoomInButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.zoomInButton.Location = new System.Drawing.Point(12, 373);
+            this.zoomInButton.Name = "zoomInButton";
+            this.zoomInButton.Size = new System.Drawing.Size(24, 26);
+            this.zoomInButton.TabIndex = 4;
+            this.zoomInButton.Text = "+";
+            this.zoomInButton.UseVisualStyleBackColor = true;
+            this.zoomInButton.Click += new System.EventHandler(this.zoomInButton_Click);
+            // 
+            // zoomOutButton
+            // 
+            this.zoomOutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.zoomOutButton.Location = new System.Drawing.Point(42, 373);
+            this.zoomOutButton.Name = "zoomOutButton";
+            this.zoomOutButton.Size = new System.Drawing.Size(24, 26);
+            this.zoomOutButton.TabIndex = 5;
+            this.zoomOutButton.Text = "-";
+            this.zoomOutButton.UseVisualStyleBackColor = true;
+            this.zoomOutButton.Click += new System.EventHandler(this.zoomOutButton_Click);
+            // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.zoomOutButton);
+            this.Controls.Add(this.zoomInButton);
             this.Controls.Add(this.buttonRepopulate);
             this.Controls.Add(this.scalingSlider);
             this.Controls.Add(this.debugLabel);
@@ -110,4 +135,6 @@ partial class MainForm1
     private Label debugLabel;
     private TrackBar scalingSlider;
     private Button buttonRepopulate;
+    private Button zoomInButton;
+    private Button zoomOutButton;
 }

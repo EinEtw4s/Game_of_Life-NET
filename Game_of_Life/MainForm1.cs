@@ -8,34 +8,44 @@ namespace Game_of_Life;
 public partial class MainForm1 : Form
 {
     private int scalingFactor = 10;
+    private int scalingAbsolute = 0;
+    private int scalingMax;
     Pixelmap pixelmap;
-    private int height;
-    private int width;
+    private int fieldHeight;
+    private int fieldWidth;
 
     public MainForm1()
     {
         InitializeComponent();
 
-        height = 1800;
-        width = 3200;
+        fieldHeight = 1800;
+        fieldWidth = 3200;
+        if (fieldWidth % 2 == 0)
+        {
+            scalingMax = fieldWidth - 2;
+        }
+        else
+        {
+            scalingMax = fieldWidth - 1;
+        }
+        
 
-        pixelmap = new Pixelmap(height, width, scalingFactor);
+        scalingSlider.Minimum = 0;
+        scalingSlider.Maximum = scalingMax;
+
+        pixelmap = new Pixelmap(fieldHeight, fieldWidth, scalingFactor);
         Random rand = new Random();
 
         for (int i = 0; i < 4000; i++)
         {
-            pixelmap.setPixel(rand.Next(width), rand.Next(height), rand.Next(3));
+            pixelmap.setPixel(rand.Next(fieldWidth), rand.Next(fieldHeight), rand.Next(3));
         }
-
-        debugLabel.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)10 / (double)scalingFactor)} - Dimensions: {Math.Floor(pictureBox.Size.Height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(pictureBox.Size.Width * ((double)10 / (double)scalingFactor)).ToString()}";
     }
 
     private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
     {
         int height = pictureBox.Size.Height;
         int width = pictureBox.Size.Width;
-
-        debugLabel.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)10 / (double)scalingFactor)} - Dimensions: {Math.Floor(height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(width * ((double)10 / (double)scalingFactor)).ToString()}";
 
         Graphics graphics = e.Graphics;
 
@@ -48,6 +58,8 @@ public partial class MainForm1 : Form
     private void pictureBox1_MouseWheel(object sender, MouseEventArgs e)
     {
         scalingFactor += e.Delta/16;
+        scalingAbsolute += e.Delta / 16;
+
         if (scalingFactor < 10)
         {
             scalingFactor = 10;
@@ -56,17 +68,46 @@ public partial class MainForm1 : Form
             scalingFactor = 500;
         }
 
-        scalingSlider.Value = scalingFactor;
+        if (scalingAbsolute < 0)
+        {
+            scalingAbsolute = 0;
+        }
+
+        if (scalingAbsolute > scalingMax)
+        {
+            scalingAbsolute = scalingMax;
+        }
+
+        if (scalingAbsolute % 2 != 0)
+        {
+            scalingAbsolute += 1;
+            scalingSlider.Value = scalingAbsolute;
+        }
+        if (scalingAbsolute > (fieldWidth - 10))
+        {
+            scalingAbsolute = (fieldWidth - 12);
+            if (scalingAbsolute % 2 != 0)
+            {
+                scalingAbsolute += 1;
+                scalingSlider.Value = scalingAbsolute;
+            }
+        }
+
+        scalingSlider.Value = scalingAbsolute;
         pixelmap.setScalingFactor(scalingFactor);
-        debugLabel.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)10 / (double)scalingFactor)} - Dimensions: {Math.Floor(pictureBox.Size.Height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(pictureBox.Size.Width * ((double)10 / (double)scalingFactor)).ToString()}";
+        pixelmap.setScalingAbsolute(scalingAbsolute);
         pictureBox.Refresh();
     }
 
     private void scalingSlider_Changed(object sender, EventArgs e)
     {
-        scalingFactor = scalingSlider.Value;
-        pixelmap.setScalingFactor(scalingFactor);
-        debugLabel.Text = $"Scaling Factor: {scalingFactor.ToString()}\n{((double)10 / (double)scalingFactor)} - Dimensions: {Math.Floor(pictureBox.Size.Height * ((double)10 / (double)scalingFactor)).ToString()}x{Math.Floor(pictureBox.Size.Width * ((double)10 / (double)scalingFactor)).ToString()}";
+        scalingAbsolute = scalingSlider.Value;
+        if (scalingAbsolute % 2 != 0)
+        {
+            scalingAbsolute += 1;
+            scalingSlider.Value = scalingAbsolute;
+        }
+        pixelmap.setScalingAbsolute(scalingAbsolute);
         pictureBox.Refresh();
     }
 
@@ -77,7 +118,7 @@ public partial class MainForm1 : Form
 
         for (int i = 0; i < 4000; i++)
         {
-            pixelmap.setPixel(rand.Next(width), rand.Next(height), rand.Next(3));
+            pixelmap.setPixel(rand.Next(fieldWidth), rand.Next(fieldHeight), rand.Next(3));
         }
         pictureBox.Refresh();
     }
@@ -86,5 +127,57 @@ public partial class MainForm1 : Form
     {
         pixelmap.cyclePixel(MousePosition.X, MousePosition.Y);
         pictureBox.Refresh();
+    }
+
+    private void zoomInButton_Click(object sender, EventArgs e)
+    {
+        scalingAbsolute += 4;
+        while (scalingAbsolute % 4 != 0)
+        {
+            scalingAbsolute += 1;
+            scalingSlider.Value = scalingAbsolute;
+        }
+        if (scalingAbsolute < 0)
+        {
+            scalingAbsolute = 0;
+        }
+        if (scalingAbsolute > (fieldWidth - 10))
+        {
+            scalingAbsolute = (fieldWidth - 12);
+            while (scalingAbsolute % 4 != 0)
+            {
+                scalingAbsolute += 1;
+                scalingSlider.Value = scalingAbsolute;
+            }
+        }
+
+        scalingSlider.Value = scalingAbsolute;
+        pixelmap.setScalingAbsolute(scalingAbsolute);
+    }
+
+    private void zoomOutButton_Click(object sender, EventArgs e)
+    {
+        scalingAbsolute -= 4;
+        while (scalingAbsolute % 4 != 0)
+        {
+            scalingAbsolute += 1;
+            scalingSlider.Value = scalingAbsolute;
+        }
+        if (scalingAbsolute < 0)
+        {
+            scalingAbsolute = 0;
+        }
+        if (scalingAbsolute > (fieldWidth - 10))
+        {
+            scalingAbsolute = (fieldWidth - 12);
+            while (scalingAbsolute % 4 != 0)
+            {
+                scalingAbsolute += 1;
+                scalingSlider.Value = scalingAbsolute;
+            }
+        }
+
+        scalingSlider.Value = scalingAbsolute;
+        pixelmap.setScalingAbsolute(scalingAbsolute);
     }
 }
