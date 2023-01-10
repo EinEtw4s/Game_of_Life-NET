@@ -21,6 +21,7 @@ public partial class MainForm1 : Form
 
         fieldHeight = 160;
         fieldWidth = 300;
+
         if (fieldWidth % 2 == 0)
         {
             scalingMax = fieldWidth - 2;
@@ -33,6 +34,9 @@ public partial class MainForm1 : Form
 
         scalingSlider.Minimum = 0;
         scalingSlider.Maximum = scalingMax;
+
+        numericSizeX.Value = (decimal)fieldWidth;
+        numericSizeY.Value = (decimal)fieldHeight;
 
         pixelmap = new Pixelmap(fieldHeight, fieldWidth, scalingFactor);
         
@@ -285,6 +289,30 @@ public partial class MainForm1 : Form
     private void buttonGameArea_Click(object sender, EventArgs e)
     {
         showGameArea = true;
+        pictureBox.Invalidate();
+    }
+
+    private void buttonNewMap_Click(object sender, EventArgs e)
+    {
+        fieldHeight = (int)numericSizeY.Value;
+        fieldWidth = (int)numericSizeX.Value;
+
+        if (fieldWidth % 2 == 0)
+        {
+            scalingMax = fieldWidth - 2;
+        }
+        else
+        {
+            scalingMax = fieldWidth - 1;
+        }
+
+        scalingSlider.Minimum = 0;
+        scalingSlider.Maximum = scalingMax;
+
+        numericSizeX.Value = (decimal)fieldWidth;
+        numericSizeY.Value = (decimal)fieldHeight;
+
+        pixelmap.NewMap((int)numericSizeX.Value, (int)numericSizeY.Value);
         pictureBox.Invalidate();
     }
 }

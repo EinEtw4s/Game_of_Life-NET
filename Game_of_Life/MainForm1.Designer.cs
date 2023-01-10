@@ -42,9 +42,14 @@ partial class MainForm1
             this.buttonClear = new System.Windows.Forms.Button();
             this.numericRenderSleep = new System.Windows.Forms.NumericUpDown();
             this.buttonGameArea = new System.Windows.Forms.Button();
+            this.numericSizeX = new System.Windows.Forms.NumericUpDown();
+            this.numericSizeY = new System.Windows.Forms.NumericUpDown();
+            this.buttonNewMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scalingSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericRenderSleep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSizeX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSizeY)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -179,12 +184,64 @@ partial class MainForm1
             this.buttonGameArea.UseVisualStyleBackColor = true;
             this.buttonGameArea.Click += new System.EventHandler(this.buttonGameArea_Click);
             // 
+            // numericSizeX
+            // 
+            this.numericSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericSizeX.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericSizeX.Location = new System.Drawing.Point(512, 405);
+            this.numericSizeX.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericSizeX.Name = "numericSizeX";
+            this.numericSizeX.Size = new System.Drawing.Size(87, 23);
+            this.numericSizeX.TabIndex = 11;
+            this.numericSizeX.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            // 
+            // numericSizeY
+            // 
+            this.numericSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericSizeY.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericSizeY.Location = new System.Drawing.Point(608, 405);
+            this.numericSizeY.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericSizeY.Name = "numericSizeY";
+            this.numericSizeY.Size = new System.Drawing.Size(87, 23);
+            this.numericSizeY.TabIndex = 12;
+            this.numericSizeY.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            // 
+            // buttonNewMap
+            // 
+            this.buttonNewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNewMap.Location = new System.Drawing.Point(701, 405);
+            this.buttonNewMap.Name = "buttonNewMap";
+            this.buttonNewMap.Size = new System.Drawing.Size(87, 23);
+            this.buttonNewMap.TabIndex = 13;
+            this.buttonNewMap.Text = "NEW MAP";
+            this.buttonNewMap.UseVisualStyleBackColor = true;
+            this.buttonNewMap.Click += new System.EventHandler(this.buttonNewMap_Click);
+            // 
             // MainForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonNewMap);
+            this.Controls.Add(this.numericSizeY);
+            this.Controls.Add(this.numericSizeX);
             this.Controls.Add(this.buttonGameArea);
             this.Controls.Add(this.numericRenderSleep);
             this.Controls.Add(this.buttonClear);
@@ -201,6 +258,8 @@ partial class MainForm1
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scalingSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericRenderSleep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSizeX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSizeY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,4 +278,7 @@ partial class MainForm1
     private Button buttonTickOnce;
     private NumericUpDown numericRenderSleep;
     private Button buttonGameArea;
+    private NumericUpDown numericSizeX;
+    private NumericUpDown numericSizeY;
+    private Button buttonNewMap;
 }

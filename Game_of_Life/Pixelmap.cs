@@ -475,4 +475,16 @@ public class Pixelmap
         map = mapBuffer;
         mapBuffer = null;
     }
+
+    public void NewMap(int width, int height)
+    {
+        this.height = height; this.width = width;
+        map = new int[width, height];
+
+        this.midPoint = new int[] { width / 2, height / 2 };
+        this.scalingAbsolute = 0;
+
+        gameWindow = new int[] { width, 0, height, 0 };
+    }
+
 }
