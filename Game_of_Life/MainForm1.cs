@@ -139,7 +139,7 @@ public partial class MainForm1 : Form
 
         for (int i = 0; i < 4000; i++)
         {
-            pixelmap.SetPixel(rand.Next(fieldWidth), rand.Next(fieldHeight), rand.Next(3));
+            pixelmap.SetPixel(rand.Next(fieldWidth), rand.Next(fieldHeight), rand.Next(0, 3));
         }
         pictureBox.Invalidate();
     }
